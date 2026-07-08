@@ -759,7 +759,7 @@
       
       if (qrOpen) {
         // Generate QR code on the fly
-        const currentUrl = window.location.href;
+        const currentUrl = "https://ctrlzmarketingdesign.github.io/drisabelasacramento/";
         qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(currentUrl)}&color=04527c&bgcolor=fffefe`;
         
         panel.classList.remove('hidden');
@@ -773,7 +773,7 @@
 
     // Copy Link To Clipboard with micro toast
     function copyLinkToClipboard() {
-      const currentUrl = window.location.href;
+      const currentUrl = "https://ctrlzmarketingdesign.github.io/drisabelasacramento/";
       
       // Use standard browser copy
       const dummyInput = document.createElement('input');
