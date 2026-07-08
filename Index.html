@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dra. Isabela Sacramento — Cartão Digital</title>
+  
+  <!-- Preconnect & Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              bg: '#1ca9cf',
+              cardFrom: '#04527c',
+              cardTo: '#2257a3',
+              white: '#fffefe',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+            cursive: ['Great Vibes', 'cursive'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Embedded Styles -->
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #1ca9cf;
+      background-image: radial-gradient(circle at top right, rgba(28, 169, 207, 0.8), rgba(0, 170, 199, 0.95));
+      color: #fffefe;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Apple Liquid Glass utility with dark grayish-blue tones and exquisite high-fidelity translucence */
+    .glass-card {
+      background: linear-gradient(135deg, rgba(12, 32, 54, 0.55) 0%, rgba(22, 45, 71, 0.60) 50%, rgba(8, 22, 38, 0.65) 100%);
+      backdrop-filter: blur(40px) saturate(180%);
+      -webkit-backdrop-filter: blur(40px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 
+        0 4px 30px rgba(0, 0, 0, 0.35),
+        0 30px 70px -15px rgba(0, 0, 0, 0.75),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.4),
+        inset 0 10px 20px -10px rgba(255, 255, 255, 0.25),
+        inset 0 -1px 0 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .glass-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .glass-btn:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.25);
+    }
+
+    .glass-btn-highlight {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+    }
+
+    .glass-btn-highlight:hover {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.25),
+                  inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+    }
+
+    /* Fade-in animations for active tab scenes */
+    .fade-in {
+      animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Custom scrollbars for specialties panel */
+    .custom-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 999px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 999px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+    
+    /* Disable blue tap highlight on mobile devices */
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+  </style>
+</head>
+<body class="py-10 px-4 flex flex-col items-center justify-center relative select-none">
+
+  <!-- Background Cover Photo -->
+  <div 
+    class="fixed inset-0 w-full h-full pointer-events-none z-0 filter brightness-100 contrast-100"
+    style="
+      background-image: url('https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1200&q=80');
+      background-position: center;
+      background-size: cover;
+      opacity: 0.70;
+    "
+  ></div>
+  
+  <!-- Light elegant blue overlay that is softer and lets the image shine through -->
+  <div class="fixed inset-0 bg-gradient-to-tr from-[#1ca9cf]/60 via-[#00AAC7]/50 to-[#2cbde2]/60 mix-blend-multiply pointer-events-none z-0"></div>
+  
+  <!-- Ambient Glowing Light Effects -->
+  <div class="fixed top-[-5%] left-[-10%] w-[320px] h-[320px] rounded-full bg-[#2257a3]/30 blur-[100px] pointer-events-none"></div>
+  <div class="fixed bottom-[-5%] right-[-10%] w-[400px] h-[400px] rounded-full bg-[#04527c]/40 blur-[110px] pointer-events-none"></div>
+  <div class="fixed top-[35%] right-[-10%] w-[250px] h-[250px] rounded-full bg-[#00AAC7]/20 blur-[80px] pointer-events-none"></div>
+
+  <!-- Main Single Column Outer Card Wrapper -->
+  <div class="w-full max-w-[400px] relative z-10 flex flex-col items-center px-0.5">
+    
+    <!-- Floating Quick Share Actions Bar -->
+    <div class="w-full flex justify-end gap-2 mb-3">
+      <!-- QR Code Toggle Button -->
+      <button 
+        id="qrBtn"
+        onclick="toggleQRCode()"
+        class="w-10 h-10 rounded-full flex items-center justify-center glass-btn text-[#fffefe]/80 hover:text-[#fffefe] cursor-pointer"
+        title="Mostrar QR Code do Cartão"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16V3a1 1 0 0 0-1-1h-3"/><path d="M10 3v1a1 1 0 0 0 1 1h2"/><path d="M10 16h1a1 1 0 0 0 1-1v-1"/><path d="M21 12H12a1 1 0 0 0-1 1v1"/><rect width="2" height="2" x="13" y="17"/><path d="M17 17v4"/><path d="M17 21h4"/></svg>
+      </button>
+      
+      <!-- Copy Link Button -->
+      <button 
+        onclick="copyLinkToClipboard()"
+        class="w-10 h-10 rounded-full flex items-center justify-center glass-btn text-[#fffefe]/80 hover:text-[#fffefe] relative cursor-pointer"
+        title="Copiar link do cartão"
+      >
+        <span id="shareIcon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        </span>
+        <span id="checkIcon" class="hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-emerald-400"><polyline points="20 6 9 17 4 12"/></svg>
+        </span>
+        
+        <!-- Inline Micro Toast Banner -->
+        <span 
+          id="copyToast"
+          class="absolute bottom-12 right-0 bg-[#04527c] text-[10px] text-white px-3 py-1.5 rounded-lg whitespace-nowrap border border-white/15 shadow-xl transition-all duration-200 pointer-events-none opacity-0 scale-90 translate-y-2"
+        >
+          Link copiado!
+        </span>
+      </button>
+    </div>
+
+    <!-- QR Code Panel (Hidden by default) -->
+    <div 
+      id="qrPanel"
+      class="w-full hidden overflow-hidden bg-[#04527c]/95 border border-white/10 rounded-3xl p-6 backdrop-blur-md flex flex-col items-center text-center shadow-2xl mb-4"
+    >
+      <h3 class="text-[#fffefe] font-serif text-base font-bold mb-1">Compartilhe meu Contato</h3>
+      <p class="text-white/70 text-xs px-2 mb-4 leading-normal">
+        Aponte a câmera do celular para o QR Code abaixo para acessar e salvar o meu cartão digital.
+      </p>
+      
+      <div class="bg-white p-3 rounded-2xl mb-4 shadow-xl border-2 border-[#2257a3]/20">
+        <img 
+          id="qrCodeImage"
+          src="" 
+          alt="QR Code Dra. Isabela Sacramento" 
+          class="w-40 h-40 rounded-lg"
+        />
+      </div>
+
+      <div class="flex gap-2 w-full">
+        <button 
+          onclick="copyLinkToClipboard()"
+          class="flex-1 glass-btn rounded-xl py-2.5 text-xs font-semibold text-[#fffefe]/90 hover:text-[#fffefe] flex items-center justify-center gap-1.5 cursor-pointer"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 text-[#00AAC7]"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+          <span id="qrCopyText">Copiar URL</span>
+        </button>
+        <button 
+          onclick="toggleQRCode()"
+          class="glass-btn rounded-xl px-4 py-2.5 text-xs text-[#fffefe]/60 hover:text-[#fffefe] cursor-pointer"
+        >
+          Fechar
+        </button>
+      </div>
+    </div>
+
+    <!-- MAIN LUXURY GLASS CARD - Single Column -->
+    <main class="w-full glass-card rounded-[2rem] p-6 md:p-8 flex flex-col items-center relative overflow-hidden shadow-2xl">
+      
+      <!-- Subtle upper light line decoration -->
+      <div class="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none"></div>
+
+      <!-- 1. HEADER PORTRAIT PROFILE -->
+      <section class="flex flex-col items-center text-center w-full mb-6">
+        <div class="relative mb-4 group">
+          <!-- Gold/white gradient stroke around avatar -->
+          <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-[#00AAC7] via-sky-300 to-white p-[2px] opacity-80 blur-[0.5px]"></div>
+          <div class="w-28 h-28 rounded-full p-[3px] bg-[#04527c] relative z-10">
+            <img 
+              src="foto.png" 
+              alt="Dra. Isabela Sacramento" 
+              class="w-full h-full object-cover rounded-full border border-white/5"
+            />
+          </div>
+        </div>
+
+        <!-- Title / Profession -->
+        <h1 class="text-2xl font-serif font-bold text-[#fffefe] tracking-wide">
+          Dra. Isabela Sacramento
+        </h1>
+        
+        <div class="flex items-center gap-1.5 mt-1 mb-3">
+          <span class="text-[#00AAC7] text-[10px] font-bold tracking-[0.15em] uppercase">
+            Cirurgiã-Dentista
+          </span>
+          <span class="text-white/30 text-xs">•</span>
+          <span class="text-white/60 text-[10px] font-mono tracking-wider">
+            CRO-BA 16649
+          </span>
+        </div>
+
+        <p class="text-white/80 text-xs md:text-[13px] font-light leading-relaxed max-w-[320px] px-1">
+          Dedicada a transformar sorrisos com excelência, ética e um atendimento humanizado.
+        </p>
+      </section>
+
+      <!-- 2. TABBED CONTROLS SWITCHER -->
+      <nav class="w-full grid grid-cols-3 gap-1 bg-[#04527c]/60 p-1 rounded-xl mb-4 border border-white/10">
+        <button
+          id="tabBtnContato"
+          onclick="switchTab('contato')"
+          class="py-2 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer bg-[#2257a3] border border-white/15 text-white shadow-md"
+        >
+          Contato
+        </button>
+        <button
+          id="tabBtnEspecialidades"
+          onclick="switchTab('especialidades')"
+          class="py-2 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer text-white/60 hover:text-white hover:bg-white/[0.03]"
+        >
+          Especialidades
+        </button>
+        <button
+          id="tabBtnMarcacao"
+          onclick="switchTab('marcacao')"
+          class="py-2 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer text-white/60 hover:text-white hover:bg-white/[0.03]"
+        >
+          Marcação
+        </button>
+      </nav>
+
+      <!-- VCF download CTA button with a cleaner, opaque white styling as requested -->
+      <div class="w-full mb-6">
+        <button 
+          id="vcardBtn"
+          onclick="downloadVCard()" 
+          class="w-full bg-white text-[#04527c] border border-white/30 rounded-xl py-3.5 flex justify-center items-center gap-2.5 font-bold tracking-wider uppercase text-xs cursor-pointer hover:bg-white/95 active:scale-[0.98] transition-all shadow-[0_4px_15px_rgba(4,82,124,0.15)]"
+          title="Salvar contatos na Agenda"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+          <span id="vcardBtnText">Salvar na Agenda</span>
+        </button>
+      </div>
+
+      <!-- 3. ACTIVE SCENE CONTENT AREA -->
+      <div class="w-full flex-1 min-h-[300px]">
+        
+        <!-- TAB A: CONTACT PANEL -->
+        <div id="tabPanelContato" class="flex flex-col w-full fade-in space-y-3">
+          
+          <!-- Grid layout representing direct buttons: WhatsApp and E-mail -->
+          <div class="grid grid-cols-2 gap-3">
+            
+            <!-- WhatsApp Link -->
+            <a 
+              href="https://wa.me/5571988764552?text=Olá%20Dra.%20Isabela!%20Acessei%20seu%20cartão%20digital%20e%20gostaria%20de%20agendar%20uma%20consulta."
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="glass-btn-highlight flex flex-col items-center justify-center p-4 rounded-xl text-[#fffefe] hover:text-white group relative overflow-hidden"
+            >
+              <span class="absolute inset-x-0 bottom-0 h-[3px] bg-[#25D366] opacity-0 group-hover:opacity-100 transition-opacity"></span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 mb-2 text-[#25D366] group-hover:scale-110 transition-transform"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <span class="text-[11px] font-bold tracking-wide text-white">WhatsApp</span>
+            </a>
+
+            <!-- Email Link -->
+            <a 
+              href="mailto:drisabelasacramento@gmail.com?subject=Contato%20via%20Cartão%20Virtual"
+              class="glass-btn-highlight flex flex-col items-center justify-center p-4 rounded-xl text-[#fffefe] hover:text-white group relative overflow-hidden"
+            >
+              <span class="absolute inset-x-0 bottom-0 h-[3px] bg-[#00AAC7] opacity-0 group-hover:opacity-100 transition-opacity"></span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 mb-2 text-[#00AAC7] group-hover:scale-110 transition-transform"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <span class="text-[11px] font-bold tracking-wide text-white">E-mail</span>
+            </a>
+
+          </div>
+
+          <!-- Solicitar Consulta Online button -->
+          <button 
+            onclick="switchTab('marcacao')"
+            class="w-full bg-[#00AAC7]/15 border border-[#00AAC7]/30 text-white hover:text-white hover:bg-[#00AAC7]/25 hover:border-[#00AAC7]/55 transition-all rounded-xl py-3.5 flex justify-center items-center gap-2 font-bold tracking-wide text-xs cursor-pointer"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-[#00AAC7]"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Solicitar Consulta Online
+          </button>
+
+          <!-- Consultório Button -->
+          <a 
+            href="https://maps.app.goo.gl/sEgoZCaiEY63f2s68"
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="w-full glass-btn-highlight rounded-xl p-4 flex items-center gap-3.5 text-white hover:scale-[1.01] transition-all cursor-pointer text-left"
+            title="Abrir localização no Google Maps"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-red-400 shrink-0"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div class="leading-tight">
+              <span class="text-[9px] uppercase font-bold tracking-wider text-[#00AAC7] block mb-0.5">Consultório</span>
+              <span class="text-xs font-semibold text-[#fffefe] leading-relaxed block">
+                Avenida 7 de Setembro, 400 — Edf Fundação Politécnica, Bloco A, 7º andar, Sl 74, Salvador/BA
+              </span>
+            </div>
+          </a>
+        </div>
+
+        <!-- TAB B: ESPECIALIDADES PANEL -->
+        <div id="tabPanelEspecialidades" class="hidden flex flex-col w-full space-y-2.5 fade-in">
+          
+          <div class="flex items-center justify-between pb-2 mb-1 border-b border-white/5">
+            <h3 class="text-white font-serif text-sm font-semibold flex items-center gap-2">
+              <span class="text-[10px] uppercase font-sans font-light tracking-[0.2em] text-white/80">Especialidades</span>
+            </h3>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 text-[#00AAC7]"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+          </div>
+
+          <!-- Specialties Accordion Container -->
+          <div class="space-y-2 max-h-[310px] overflow-y-auto pr-1 custom-scroll">
+            
+            <!-- Restaurações estéticas -->
+            <div class="rounded-xl border border-white/5 bg-white/[0.02] transition-all overflow-hidden" id="spec_restauracoes">
+              <button 
+                onclick="toggleSpecialty('restauracoes')" 
+                class="w-full text-left p-3.5 flex items-center justify-between gap-3 cursor-pointer focus:outline-none"
+              >
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#04527c] border border-white/10 text-[#00AAC7]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                  </div>
+                  <div>
+                    <h4 class="text-[13px] font-semibold text-white">Restaurações estéticas</h4>
+                  </div>
+                </div>
+                <div id="chevron_restauracoes" class="text-white/40 transition-transform duration-200">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+              </button>
+              <div id="desc_restauracoes" class="hidden px-3.5 pb-3.5 pt-1 border-t border-white/5 fade-in">
+                <p class="text-[11px] text-white/80 leading-relaxed font-light">
+                  Restaurações estéticas de alta durabilidade e precisão, utilizando resinas compostas de última geração para devolver a forma e função natural do dente.
+                </p>
+                <button 
+                  onclick="selectSpecialtyAndConnect('Restaurações estéticas')"
+                  class="mt-2.5 text-[10px] font-bold text-[#00AAC7] hover:text-[#fffefe] flex items-center gap-1 uppercase tracking-wider transition-colors cursor-pointer"
+                >
+                  <span>Agendar sobre este tema</span> 
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-2.5 h-2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Clareamento dental -->
+            <div class="rounded-xl border border-white/5 bg-white/[0.02] transition-all overflow-hidden" id="spec_clareamento">
+              <button 
+                onclick="toggleSpecialty('clareamento')" 
+                class="w-full text-left p-3.5 flex items-center justify-between gap-3 cursor-pointer focus:outline-none"
+              >
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#04527c] border border-white/10 text-[#00AAC7]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                  </div>
+                  <div>
+                    <h4 class="text-[13px] font-semibold text-white">Clareamento dental</h4>
+                  </div>
+                </div>
+                <div id="chevron_clareamento" class="text-white/40 transition-transform duration-200">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+              </button>
+              <div id="desc_clareamento" class="hidden px-3.5 pb-3.5 pt-1 border-t border-white/5 fade-in">
+                <p class="text-[11px] text-white/80 leading-relaxed font-light">
+                  Tratamentos clareadores personalizados (de consultório ou caseiro supervisionado) para devolver o brilho e a vivacidade ao seu sorriso com total segurança.
+                </p>
+                <button 
+                  onclick="selectSpecialtyAndConnect('Clareamento dental')"
+                  class="mt-2.5 text-[10px] font-bold text-[#00AAC7] hover:text-[#fffefe] flex items-center gap-1 uppercase tracking-wider transition-colors cursor-pointer"
+                >
+                  <span>Agendar sobre este tema</span> 
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-2.5 h-2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Tratamento endodôntico (canal) -->
+            <div class="rounded-xl border border-white/5 bg-white/[0.02] transition-all overflow-hidden" id="spec_canal">
+              <button 
+                onclick="toggleSpecialty('canal')" 
+                class="w-full text-left p-3.5 flex items-center justify-between gap-3 cursor-pointer focus:outline-none"
+              >
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#04527c] border border-white/10 text-[#00AAC7]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                  </div>
+                  <div>
+                    <h4 class="text-[13px] font-semibold text-white">Tratamento endodôntico (canal)</h4>
+                  </div>
+                </div>
+                <div id="chevron_canal" class="text-white/40 transition-transform duration-200">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+              </button>
+              <div id="desc_canal" class="hidden px-3.5 pb-3.5 pt-1 border-t border-white/5 fade-in">
+                <p class="text-[11px] text-white/80 leading-relaxed font-light">
+                  Tecnologia mecanizada rotatória e reciprocante para um tratamento de canal rápido, indolor e extremamente seguro, preservando o dente original.
+                </p>
+                <button 
+                  onclick="selectSpecialtyAndConnect('Tratamento endodôntico (canal)')"
+                  class="mt-2.5 text-[10px] font-bold text-[#00AAC7] hover:text-[#fffefe] flex items-center gap-1 uppercase tracking-wider transition-colors cursor-pointer"
+                >
+                  <span>Agendar sobre este tema</span> 
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-2.5 h-2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Exodontias (Extrações) -->
+            <div class="rounded-xl border border-white/5 bg-white/[0.02] transition-all overflow-hidden" id="spec_extracao">
+              <button 
+                onclick="toggleSpecialty('extracao')" 
+                class="w-full text-left p-3.5 flex items-center justify-between gap-3 cursor-pointer focus:outline-none"
+              >
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#04527c] border border-white/10 text-[#00AAC7]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  </div>
+                  <div>
+                    <h4 class="text-[13px] font-semibold text-white">Exodontias (Extrações)</h4>
+                  </div>
+                </div>
+                <div id="chevron_extracao" class="text-white/40 transition-transform duration-200">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+              </button>
+              <div id="desc_extracao" class="hidden px-3.5 pb-3.5 pt-1 border-t border-white/5 fade-in">
+                <p class="text-[11px] text-white/80 leading-relaxed font-light">
+                  Remoções cirúrgicas de dentes de forma totalmente segura e indolor, com protocolo pós-operatório humanizado para o seu máximo conforto.
+                </p>
+                <button 
+                  onclick="selectSpecialtyAndConnect('Exodontias (Extrações)')"
+                  class="mt-2.5 text-[10px] font-bold text-[#00AAC7] hover:text-[#fffefe] flex items-center gap-1 uppercase tracking-wider transition-colors cursor-pointer"
+                >
+                  <span>Agendar sobre este tema</span> 
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-2.5 h-2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- TAB C: MARCAÇÃO PANEL -->
+        <div id="tabPanelMarcacao" class="hidden flex flex-col w-full fade-in">
+          <div class="flex items-center justify-between pb-2 mb-3 border-b border-white/5">
+            <h3 class="text-white font-serif text-sm font-semibold">Solicitar Atendimento</h3>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 text-[#00AAC7]"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+
+          <!-- Submission success panel -->
+          <div id="formSuccess" class="hidden flex flex-col items-center text-center py-8 px-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl fade-in">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-12 h-12 text-emerald-400 mb-3"><circle cx="12" cy="12" r="10"/><polyline points="16 12 12 8 8 12"/><line x1="12" y1="16" x2="12" y2="8"/></svg>
+            <h4 class="text-white font-serif text-base font-bold mb-1">Solicitação Enviada!</h4>
+            <p class="text-white/80 text-[11px] leading-relaxed">
+              Sua mensagem de agendamento foi formatada e aberta no WhatsApp da Dra. Isabela. Você receberá um retorno em breve.
+            </p>
+          </div>
+
+          <!-- Lead Capture Form -->
+          <form id="leadForm" onsubmit="submitLeadForm(event)" class="space-y-3 text-left">
+            <div>
+              <label class="block text-[10px] font-semibold text-white/80 uppercase tracking-wider mb-1">
+                Seu Nome <span class="text-red-400">*</span>
+              </label>
+              <input 
+                id="formName"
+                type="text" 
+                required 
+                placeholder="Ex: Maria Santos"
+                class="w-full bg-[#04527c] border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-white/30 focus:outline-none focus:border-[#00AAC7] transition-colors"
+              />
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[10px] font-semibold text-white/80 uppercase tracking-wider mb-1">
+                  Telefone / WhatsApp <span class="text-red-400">*</span>
+                </label>
+                <input 
+                  id="formPhone"
+                  type="tel" 
+                  required 
+                  placeholder="Ex: (71) 99999-9999"
+                  class="w-full bg-[#04527c] border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-white/30 focus:outline-none focus:border-[#00AAC7] transition-colors"
+                />
+              </div>
+              <div>
+                <label class="block text-[10px] font-semibold text-white/80 uppercase tracking-wider mb-1">
+                  E-mail (Opcional)
+                </label>
+                <input 
+                  id="formEmail"
+                  type="email" 
+                  placeholder="Ex: maria@gmail.com"
+                  class="w-full bg-[#04527c] border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-white/30 focus:outline-none focus:border-[#00AAC7] transition-colors"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-[10px] font-semibold text-white/80 uppercase tracking-wider mb-1">
+                Tratamento de Interesse
+              </label>
+              <select 
+                id="treatmentSelect"
+                onchange="onTreatmentChange()"
+                class="w-full bg-[#04527c] border border-white/10 rounded-lg px-3 py-2 text-xs text-white/90 focus:outline-none focus:border-[#00AAC7] transition-colors cursor-pointer"
+              >
+                <option value="Restaurações estéticas">Restaurações estéticas</option>
+                <option value="Clareamento dental">Clareamento dental</option>
+                <option value="Tratamento endodôntico (canal)">Tratamento endodôntico (canal)</option>
+                <option value="Exodontias (Extrações)">Exodontias (Extrações)</option>
+                <option value="Outro assunto">Outro assunto</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-[10px] font-semibold text-white/80 uppercase tracking-wider mb-1">
+                Mensagem Adicional (Opcional)
+              </label>
+              <textarea 
+                id="messageTextArea"
+                rows="2"
+                placeholder="Gostaria de agendar uma consulta para ..."
+                class="w-full bg-[#04527c] border border-white/10 rounded-lg p-2 text-xs text-white placeholder-white/30 focus:outline-none focus:border-[#00AAC7] transition-colors resize-none"
+              ></textarea>
+            </div>
+
+            <button 
+              type="submit" 
+              class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold text-xs py-3 rounded-xl uppercase tracking-wider hover:brightness-105 active:scale-[0.98] transition-all flex justify-center items-center gap-1.5 cursor-pointer shadow-md"
+            >
+              <span>Solicitar via WhatsApp</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </form>
+        </div>
+
+      </div>
+
+      <!-- 4. FOOTER REGION AND COPYRIGHT -->
+      <footer class="w-full flex flex-col items-center border-t border-white/10 pt-5 mt-6">
+        
+        <!-- Fallback logo style inside single HTML, fully centered -->
+        <div class="flex flex-col items-center gap-2 mb-2">
+          <div class="h-16 flex items-center justify-center p-1">
+            <img src="marca.png" alt="Logo Dra. Isabela Sacramento" class="h-14 w-auto object-contain hover:scale-105 transition-transform" />
+          </div>
+          <span class="font-serif font-bold text-[11px] text-[#fffefe] uppercase tracking-[0.2em] text-center">Dra. Isabela Sacramento</span>
+          <span class="font-sans font-light text-[8px] text-[#00AAC7] uppercase tracking-[0.25em] text-center">Cirurgiã-Dentista</span>
+        </div>
+
+        <p class="text-[9px] text-white/35 tracking-widest uppercase mt-1">
+          © 2026 • Todos os direitos reservados
+        </p>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- Client-Side State Scripts -->
+  <script>
+    // State management
+    let activeTab = 'contato';
+    let expandedSpecialty = null;
+    let qrOpen = false;
+
+    // Contact details
+    const dentistInfo = {
+      phone: "+5571988764552",
+      email: "drisabelasacramento@gmail.com",
+      street: "Avenida 7 de Setembro",
+      number: "400",
+      complement: "Edf Fundação Politécnica, Bloco A, 7º andar, Sl 74",
+      city: "Salvador",
+      state: "BA",
+      zipCode: "40060-001"
+    };
+
+    // On mount
+    window.onload = function() {
+      // Set initial message
+      onTreatmentChange();
+    };
+
+    // Tab Switcher
+    function switchTab(tabName) {
+      activeTab = tabName;
+      
+      // Select elements
+      const panelContato = document.getElementById('tabPanelContato');
+      const panelEspecialidades = document.getElementById('tabPanelEspecialidades');
+      const panelMarcacao = document.getElementById('tabPanelMarcacao');
+      
+      const btnContato = document.getElementById('tabBtnContato');
+      const btnEspecialidades = document.getElementById('tabBtnEspecialidades');
+      const btnMarcacao = document.getElementById('tabBtnMarcacao');
+
+      // Hide all panels
+      panelContato.classList.add('hidden');
+      panelEspecialidades.classList.add('hidden');
+      panelMarcacao.classList.add('hidden');
+
+      // Remove active classes
+      const inactiveClasses = "text-white/60 hover:text-white hover:bg-white/[0.03]";
+      const activeClasses = "bg-[#2257a3] border border-white/15 text-white shadow-md";
+
+      [btnContato, btnEspecialidades, btnMarcacao].forEach(btn => {
+        btn.className = "py-2 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer " + inactiveClasses;
+      });
+
+      // Show active panel and button
+      if (tabName === 'contato') {
+        panelContato.classList.remove('hidden');
+        btnContato.className = "py-2 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer " + activeClasses;
+      } else if (tabName === 'especialidades') {
+        panelEspecialidades.classList.remove('hidden');
+        btnEspecialidades.className = "py-2 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer " + activeClasses;
+      } else if (tabName === 'marcacao') {
+        panelMarcacao.classList.remove('hidden');
+        btnMarcacao.className = "py-2 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer " + activeClasses;
+      }
+    }
+
+    // Accordion Specialty Toggle
+    function toggleSpecialty(specialtyId) {
+      const allIds = ['restauracoes', 'clareamento', 'canal', 'extracao'];
+      
+      allIds.forEach(id => {
+        const desc = document.getElementById('desc_' + id);
+        const chevron = document.getElementById('chevron_' + id);
+        const wrapper = document.getElementById('spec_' + id);
+        
+        if (id === specialtyId && expandedSpecialty !== specialtyId) {
+          desc.classList.remove('hidden');
+          chevron.style.transform = 'rotate(180deg)';
+          wrapper.className = "rounded-xl border border-white/20 bg-[#2257a3]/40 transition-all overflow-hidden shadow-md";
+        } else {
+          desc.classList.add('hidden');
+          chevron.style.transform = 'rotate(0deg)';
+          wrapper.className = "rounded-xl border border-white/5 bg-white/[0.02] hover:border-white/10 hover:bg-white/[0.04] transition-all overflow-hidden";
+        }
+      });
+
+      if (expandedSpecialty === specialtyId) {
+        expandedSpecialty = null;
+      } else {
+        expandedSpecialty = specialtyId;
+      }
+    }
+
+    // Action of choosing a specialty to schedule
+    function selectSpecialtyAndConnect(specialtyName) {
+      const select = document.getElementById('treatmentSelect');
+      select.value = specialtyName;
+      
+      // Update the textarea message
+      onTreatmentChange();
+      
+      // Switch tab to scheduling
+      switchTab('marcacao');
+      
+      // Focus name input
+      setTimeout(() => {
+        document.getElementById('formName').focus();
+      }, 100);
+    }
+
+    // Dropdown value changing dynamically suggests a beautiful message
+    function onTreatmentChange() {
+      const select = document.getElementById('treatmentSelect');
+      const messageField = document.getElementById('messageTextArea');
+      const selectedValue = select.value;
+
+      if (selectedValue === "Outro assunto") {
+        messageField.value = "Olá Dra. Isabela! Gostaria de agendar uma consulta.";
+      } else {
+        messageField.value = `Olá Dra. Isabela! Gostaria de agendar uma consulta para: ${selectedValue}`;
+      }
+    }
+
+    // Toggle QR Code floating panel
+    function toggleQRCode() {
+      const panel = document.getElementById('qrPanel');
+      const btn = document.getElementById('qrBtn');
+      const qrImg = document.getElementById('qrCodeImage');
+      
+      qrOpen = !qrOpen;
+      
+      if (qrOpen) {
+        // Generate QR code on the fly
+        const currentUrl = window.location.href;
+        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(currentUrl)}&color=04527c&bgcolor=fffefe`;
+        
+        panel.classList.remove('hidden');
+        btn.className = "w-10 h-10 rounded-full flex items-center justify-center glass-btn text-[#fffefe] bg-white/10 border-white/30 scale-105 cursor-pointer";
+        panel.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        panel.classList.add('hidden');
+        btn.className = "w-10 h-10 rounded-full flex items-center justify-center glass-btn text-[#fffefe]/80 hover:text-[#fffefe] cursor-pointer";
+      }
+    }
+
+    // Copy Link To Clipboard with micro toast
+    function copyLinkToClipboard() {
+      const currentUrl = window.location.href;
+      
+      // Use standard browser copy
+      const dummyInput = document.createElement('input');
+      document.body.appendChild(dummyInput);
+      dummyInput.value = currentUrl;
+      dummyInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(dummyInput);
+
+      // Show check icon
+      document.getElementById('shareIcon').classList.add('hidden');
+      document.getElementById('checkIcon').classList.remove('hidden');
+
+      // Update QR Panel copy text if visible
+      const qrCopyText = document.getElementById('qrCopyText');
+      if (qrCopyText) qrCopyText.textContent = 'Copiado!';
+
+      // Show copy toast
+      const toast = document.getElementById('copyToast');
+      toast.classList.remove('opacity-0', 'scale-90', 'translate-y-2');
+      toast.classList.add('opacity-100', 'scale-100', 'translate-y-0');
+
+      // Reset after 2.5s
+      setTimeout(() => {
+        document.getElementById('shareIcon').classList.remove('hidden');
+        document.getElementById('checkIcon').classList.add('hidden');
+        if (qrCopyText) qrCopyText.textContent = 'Copiar URL';
+        
+        toast.classList.add('opacity-0', 'scale-90', 'translate-y-2');
+        toast.classList.remove('opacity-100', 'scale-100', 'translate-y-0');
+      }, 2500);
+    }
+
+    // Download VCard
+    function downloadVCard() {
+      const btn = document.getElementById('vcardBtn');
+      const btnText = document.getElementById('vcardBtnText');
+      
+      btn.disabled = true;
+      btnText.textContent = "Salvando Contato...";
+      btn.style.opacity = '0.8';
+
+      const vCardData = `BEGIN:VCARD\n` +
+                        `VERSION:3.0\n` +
+                        `FN;CHARSET=UTF-8:Dra. Isabela Sacramento\n` +
+                        `N;CHARSET=UTF-8:Sacramento;Isabela;;Dra.;\n` +
+                        `ORG;CHARSET=UTF-8:Dra. Isabela Sacramento | Odontologia\n` +
+                        `TITLE:Cirurgiã-Dentista\n` +
+                        `TEL;TYPE=CELL,VOICE:${dentistInfo.phone}\n` +
+                        `EMAIL;TYPE=PREF,INTERNET:${dentistInfo.email}\n` +
+                        `ADR;TYPE=WORK,POSTAL:;;${dentistInfo.street}\\, ${dentistInfo.number}\\, ${dentistInfo.complement};${dentistInfo.city};${dentistInfo.state};${dentistInfo.zipCode};Brazil\n` +
+                        `NOTE;CHARSET=UTF-8:CRO-BA 16649 - Atendimento Odontológico Humanizado e de Alta Performance.\n` +
+                        `URL:https://instagram.com/draisabelasacramento\n` +
+                        `REV:${new Date().toISOString().replace(/[-:]/g, "")}\n` +
+                        `END:VCARD`;
+
+      const blob = new Blob([vCardData], { type: "text/vcard;charset=utf-8;" });
+      const url = window.URL.createObjectURL(blob);
+      
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "Dra_Isabela_Sacramento.vcf");
+      document.body.appendChild(link);
+      link.click();
+      
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      setTimeout(() => {
+        btn.disabled = false;
+        btnText.textContent = "Salvar na Agenda";
+        btn.style.opacity = '1';
+      }, 2000);
+    }
+
+    // Submit Lead Capture Form
+    function submitLeadForm(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('formName').value;
+      const phone = document.getElementById('formPhone').value;
+      const email = document.getElementById('formEmail').value || "Não informado";
+      const service = document.getElementById('treatmentSelect').value;
+      const message = document.getElementById('messageTextArea').value || "Gostaria de agendar uma consulta sobre o tema.";
+
+      // Format WhatsApp content message
+      const baseMessageText = `Olá Dra. Isabela! Acessei seu cartão digital e gostaria de solicitar informações:\n\n*Dados de contato:*\n• *Nome:* ${name}\n• *Telefone:* ${phone}\n• *E-mail:* ${email}\n• *Interesse em:* ${service}\n\n*Mensagem:* ${message}`;
+      
+      const whatsappUrl = `https://wa.me/5571988764552?text=${encodeURIComponent(baseMessageText)}`;
+      
+      // Open WhatsApp tab
+      window.open(whatsappUrl, "_blank");
+
+      // Show success
+      document.getElementById('leadForm').classList.add('hidden');
+      document.getElementById('formSuccess').classList.remove('hidden');
+
+      // Reset form after 4 seconds
+      setTimeout(() => {
+        document.getElementById('leadForm').classList.remove('hidden');
+        document.getElementById('formSuccess').classList.add('hidden');
+        
+        document.getElementById('leadForm').reset();
+        onTreatmentChange();
+      }, 4000);
+    }
+  </script>
+</body>
+</html>
